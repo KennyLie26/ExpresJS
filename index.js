@@ -1,21 +1,80 @@
 const express = require("express") // impor modul express
 const app = express()//inisilisasi express
+const expressLayout = require("express-ejs-layouts");
 const port = 3000 
+
+app.set('view engine','ejs');
+app.set("view", __dirname + "/view");
+
+app.use(expressLayout);
 
 // route/
 app.get("/", (req, res) =>{
-    res.send("Hello");
+    // res.send("Hello");
+    res.render('index', {title: 'Halaman Home'});
+
+    const berita = [
+        {
+            judul: "Berita 1",
+            isi: "is berita 1"
+        },
+        {
+            judul: "Berita 2",
+            isi: "is berita 2"
+        },
+    ];
+    res.render('index', {title:
+        'Halaman Home', berita});
+});
+
+app.get("/prodi", (req, res) =>{
+
+    const prodis = [
+    {
+        "prodi"    : "Sistem Informasi",
+        "fakultas" : "FIKR",
+        "singkatan": "SI"
+    },
+    {
+        "prodi"    : "Informatika",
+        "fakultas" : "FIKR",
+        "singkatan": "IF" 
+    },
+    {
+        "prodi"    : "Teknik Eektro",
+        "fakultas" : "FIKR",
+        "singkatan": "TE" 
+    },
+    {
+        "prodi"    : "Manajemen Informatika",
+        "fakultas" : "FIKR",
+        "singkatan": "MI" 
+    },
+    {
+        "prodi"    : "Manajemen",
+        "fakultas" : "FEB",
+        "singkatan": "MJ" 
+    },
+    {
+        "prodi"    : "Akuntansi",
+        "fakultas" : "FEB",
+        "singkatan": "AK" 
+    },
+];
+    res.render('prodi', {title:'Program Studi', prodis});
 });
 
 // route/abaout
 app.get("/about", (req, res) =>{
-    res.send("About us");
+    // res.sendFile(__dirname + "/about.ejs");
+    res.render('about', {title: 'About Us', layout:'main.ejs'});
 });
 
 // route/contact
 app.get("/contact", (req, res) =>{
     //res.send("Contact us");
-    res.sendFile(__dirname + "/contact.html");
+    // res.sendFile(__dirname + "/contact.ejs");
+    res.render('contact');
 });
 
 // route/mahasiswa
